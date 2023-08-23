@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phrase Search</title>
+</head>
+<body>
+    <h1>Phrase Search</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="folder">Choose a folder:</label>
+        <input type="file" name="folder" id="folder" required directory multiple webkitdirectory><br>
+        <label for="phrase">Enter the phrase:</label>
+        <input type="text" name="phrase" id="phrase" required><br>
+        <label for="context_lines">Number of context lines:</label>
+        <input type="number" name="context_lines" id="context_lines" value="2" required><br>
+        <input type="submit" value="Search">
+    </form>
+    <h1>Results:</h1>
+    {% if contexts is not none %}
+    <div>
+        {% if contexts %}
+            {% for context in contexts %}
+                {% set context = context.replace(search_phrase, '<br><div><b>' + search_phrase + '</b></div>') %}
+                <pre>{{ context | safe }}</pre><br><br>
+            {% endfor %}
+        {% else %}
+            Phrase not found in any files.
+        {% endif %}
+    </div>
+    {% endif %}
+</body>
+</html>
+
